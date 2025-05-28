@@ -3,7 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const app = express();
 app.use(cors());
@@ -41,9 +41,9 @@ app.get('/', async (req, res) => {
 // Attendance endpoint
 app.post('/attendance', async (req, res) => {
   const uid = req.body.uid;
-  const now = moment();
-  const hour = now.hour() + 5;
-  const minute = now.minute() + 30;
+  const now = moment().tz("Asia/Kolkata");  // ✅ IST time
+  const hour = now.hour();
+  const minute = now.minute();
 
   const isLate = (hour > 9 || (hour === 9 && minute > 35));
   const status = isLate ? 'Late' : 'On Time';
