@@ -42,8 +42,8 @@ app.get('/', async (req, res) => {
 app.post('/attendance', async (req, res) => {
   const uid = req.body.uid;
   const now = moment();
-  const hour = now.hour();
-  const minute = now.minute();
+  const hour = now.hour() + 5;
+  const minute = now.minute() + 30;
 
   const isLate = (hour > 9 || (hour === 9 && minute > 35));
   const status = isLate ? 'Late' : 'On Time';
