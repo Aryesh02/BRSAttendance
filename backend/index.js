@@ -64,6 +64,17 @@ app.post('/attendance', async (req, res) => {
   }
 });
 
+app.get('/attendance/:uid', async (req, res) => {
+  const uid = req.params.uid;
+  try {
+    const Attendance = getUserModel(uid);
+    const records = await Attendance.find({}).sort({ date: -1, time: -1 });
+    res.status(200).json(records);
+  } catch (err) {
+    res.status(500).json({ error: 'Could not fetch attendance records.' });
+  }
+});
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
